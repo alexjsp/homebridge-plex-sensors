@@ -1,0 +1,24 @@
+{
+  "name": "homebridge-plex-sensors",
+  "version": "1.0.0",
+  "description": "A plugin for homebridge that adds sensors for Plex playbacks",
+  "license": "MIT",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alexp2ad/homebridge-plex-sensors.git"
+  },
+  "bugs": {
+    "url": "http://github.com/alexp2ad/homebridge-plex-sensors/issues"
+  },
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  },
+  "dependencies": {
+    "nodobjc": "^2.1.0",
+    "request": "^2.65.0"
+  }
+}
