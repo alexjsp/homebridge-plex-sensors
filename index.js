@@ -4,7 +4,7 @@ var request = require("request");
 var Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen;
 
 // Setting debug = true presents copious, unneeded logs
-var debug = true;
+var debug = false;
 
 var pluginName = "homebridge-plex-sensors";
 var platformName = "Plex";
