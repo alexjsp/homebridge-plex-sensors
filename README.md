@@ -43,7 +43,7 @@ Variable | Description
 
 ### Example Configs
 
-Exmaple config with one sensor triggered by any Plex playback:
+Example config with one sensor triggered by any Plex playback:
 ```json
 {
 "platforms": [
@@ -59,7 +59,7 @@ Exmaple config with one sensor triggered by any Plex playback:
 }
 ```
 
-Exmaple config with a sensor triggered by TV show playbacks, and a sensor triggered by movie playbacks (both filtered to a specific user and player):
+Example config with a sensor triggered by TV show playbacks, and a sensor triggered by movie playbacks (both filtered to a specific user and player):
 ```json
 {
 "platforms": [
@@ -84,7 +84,7 @@ Exmaple config with a sensor triggered by TV show playbacks, and a sensor trigge
 }
 ```
 
-Exmaple config with a sensor triggered only by playing the TV show Breaking Bad (also shows a custom port number being set for the webhook server):
+Example config with a sensor triggered only by playing the TV show Breaking Bad (also shows a custom port number being set for the webhook server):
 ```json
 {
 "platforms": [
