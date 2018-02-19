@@ -27,7 +27,6 @@ function Plex(log, config, api) {
     this.log = log;
     this.api = api;
     this.accessories = {};
-    this.pausedCountsAsStopped = true;
     this.sensors = config["sensors"];
     this.port = config["port"] || '22987';
     var self = this;
