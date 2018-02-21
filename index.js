@@ -1,5 +1,4 @@
 var http = require('http');
-var request = require("request");
 
 var Accessory, Characteristic, Consumption, Service, TotalConsumption, UUIDGen;
 
