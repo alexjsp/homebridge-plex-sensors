@@ -62,6 +62,7 @@ function Plex(log, config, api) {
                     self.api.registerPlatformAccessories(pluginName, platformName, [accessory]);
                 }
             }
+            sensor.activePlayers = new Set();
         }
     });
 }
@@ -75,6 +76,7 @@ Plex.prototype.configureAccessory = function(accessory) {
         {
             sensor.service = accessory.services[1];
         }
+        sensor.activePlayers = new Set();
     }
 }
 
@@ -141,11 +143,16 @@ Plex.prototype.processEvent = function(self, event, sensor) {
     
     if (event.event == "media.play" || (event.event == "media.resume" && !sensor.ignorePauseResume))
     {
+        sensor.activePlayers.add(event.Player.uuid);
         sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(true);
     }
     else if (event.event == "media.stop" || (event.event == "media.pause" && !sensor.ignorePauseResume))
     {
-        sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+        sensor.activePlayers.delete(event.Player.uuid);
+        if (sensor.activePlayers.size == 0)
+        {
+            sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+        }
     }
     else
     {
