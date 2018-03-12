@@ -4,7 +4,9 @@ This plugin for [Homebridge](https://github.com/nfarina/homebridge) adds sensor(
 
 Automatically dim the lights when you start watching TV, or turn them off completely for a movie.  With advanced HomeKit automations you can even trigger different scenes depending on the time of day.
 
-Plex Sensors uses Plex's webhook feature to get notified by your Plex server _immediately_ when playback starts and stops, without needing to constantly poll your server.
+Plex Sensors uses Plex's [webhooks](https://support.plex.tv/articles/115002267687-webhooks/) feature to get notified by your Plex server _immediately_ when playback starts and stops, without needing to constantly poll your server.
+
+Note: Because [webhooks](https://support.plex.tv/articles/115002267687-webhooks/) require Plex Pass for the Plex Media Server account, this plugin also effectively requires Plex Pass.
 
 ## Installation
 
