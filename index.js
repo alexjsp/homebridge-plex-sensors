@@ -64,6 +64,28 @@ function Plex(log, config, api) {
             }
             sensor.activePlayers = new Set();
         }
+        
+        var deleteAccessories = new Array();
+        for (var accessoryUUID in self.accessories)
+        {
+            var accessory = self.accessories[accessoryUUID];
+            var foundInSensors = false;
+            for(var sensor of self.sensors)
+            {
+                if (accessory.services[1].displayName == sensor.name)
+                {
+                    foundInSensors = true;
+                }
+            }
+            
+            if (!foundInSensors)
+            {
+                delete self.accessories[accessory.UUID];
+                deleteAccessories.push(accessory);
+                self.log("Removing old '"+accessory.displayName+"' sensor no longer in config.");
+            }
+        }
+        self.api.unregisterPlatformAccessories(pluginName, platformName, deleteAccessories);
     });
 }
 
@@ -75,8 +97,8 @@ Plex.prototype.configureAccessory = function(accessory) {
         if (accessory.services[1].displayName == sensor.name)
         {
             sensor.service = accessory.services[1];
+            sensor.activePlayers = new Set();
         }
-        sensor.activePlayers = new Set();
     }
 }
 
