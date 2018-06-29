@@ -2,6 +2,8 @@
 
 This plugin for [Homebridge](https://github.com/nfarina/homebridge) adds sensor(s) to HomeKit that are triggered by Plex playbacks.  You can use these sensors to trigger HomeKit scenes when Plex starts and stops playback.
 
+![Example image of a Homebridge Sensor for Plex](Images/Example.png?raw=true "Example image of a Homebridge Sensor for Plex")
+
 Automatically dim the lights when you start watching TV, or turn them off completely for a movie.  With advanced HomeKit automations you can even trigger different scenes depending on the time of day.
 
 Plex Sensors uses Plex's [webhooks](https://support.plex.tv/articles/115002267687-webhooks/) feature to get notified by your Plex server _immediately_ when playback starts and stops, without needing to constantly poll your server.
