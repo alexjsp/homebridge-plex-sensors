@@ -28,6 +28,8 @@ function Plex(log, config, api) {
     this.accessories = {};
     this.sensors = config["sensors"];
     this.port = config["port"] || '22987';
+    this.logSeenPlayersAndUsers = config["logSeenPlayersAndUsers"] || false;
+    debug = config["debug"] || false;
     var self = this;
         
     this.server = http.createServer(function(request, response) {
@@ -123,6 +125,13 @@ Plex.prototype.httpHandler = function(self, body) {
         && event.event != "media.pause")
     {
         return;
+    }
+    
+    if ((self.logSeenPlayersAndUsers || debug)
+        && event.event == "media.play")
+    {
+        self.log("Seen player: \""+event.Player.title+"\"");
+        self.log("Seen user: \""+event.Account.title+"\"");
     }
     
     self.debugLog("Processing event: "+json);

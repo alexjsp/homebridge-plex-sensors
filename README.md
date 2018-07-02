@@ -45,6 +45,14 @@ Variable | Description
 `ignorePauseResume` | (Optional - default: false) If set to true the sensor will remain "triggered" while playback is paused. By default paused players will untrigger the sensor.
 `customFilters` | (Optional / Advanced) Custom filters allow you to filter for specific properties on the JSON events that the above use cases don't cover. For example you could make a sensor only triggered by playing a specific TV Show or movie. See [Plex's article on Webhooks](https://support.plex.tv/articles/115002267687-webhooks/) for more details of what is passed in webhook events.
 
+Additionally, you can set the following settings globally, outside of the `sensors` object:
+
+Variable | Description
+-------- | -----------
+`logSeenPlayersAndUsers` | (Optional - default: false) Setting this to true will log every player device name and username that the plugin sees starting a playback from the webhook, potentially useful for figuring out device names.
+`debug` | (Optional - default: false) Setting this to true will log every webhook and how it is handled by the plugin's logic. You should probably leave this false.
+
+
 ### Example Configs
 
 Example config with one sensor triggered by any Plex playback:
@@ -103,6 +111,23 @@ Example config with a sensor triggered only by playing the TV show Breaking Bad 
           {
               "Metadata.grandparentTitle": "Breaking Bad"
           }
+        }
+      ]
+    }
+]
+}
+```
+
+Example config with the `logSeenPlayersAndUsers` setting to `true` for helping you figure out device names:
+```json
+{
+"platforms": [
+    {
+      "platform": "homebridge-plex-sensors.Plex",
+      "logSeenPlayersAndUsers": true,
+      "sensors": [
+        {
+          "name": "Plex Playing",
         }
       ]
     }
