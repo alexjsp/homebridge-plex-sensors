@@ -130,7 +130,7 @@ Plex.prototype.httpHandler = function(self, body) {
     if ((self.logSeenPlayersAndUsers || debug)
         && event.event == "media.play")
     {
-        self.log("Seen player: \""+event.Player.title+"\"");
+        self.log("Seen player: \""+event.Player.title+"\" (with UUID: \""+event.Player.uuid+"\")");
         self.log("Seen user: \""+event.Account.title+"\"");
     }
     
@@ -142,17 +142,24 @@ Plex.prototype.httpHandler = function(self, body) {
 }
 
 Plex.prototype.processEvent = function(self, event, sensor) {
-    if (sensor.users && sensor.users.length > 0 && sensor.users.indexOf(event.Account.title) == -1)
+    if (sensor.users
+        && sensor.users.length > 0
+        && sensor.users.indexOf(event.Account.title) == -1)
     {
         self.debugLog("Event doesn't match users for sensor: "+sensor.name);
         return;
     }
-    if (sensor.players && sensor.players.length > 0 && sensor.players.indexOf(event.Player.title) == -1)
+    if (sensor.players
+        && sensor.players.length > 0
+        && sensor.players.indexOf(event.Player.title) == -1
+        && sensor.players.indexOf(event.Player.uuid) == -1)
     {
         self.debugLog("Event doesn't match players for sensor: "+sensor.name);
         return;
     }
-    if (sensor.types && sensor.types.length > 0 && sensor.types.indexOf(event.Metadata.type) == -1)
+    if (sensor.types
+        && sensor.types.length > 0
+        && sensor.types.indexOf(event.Metadata.type) == -1)
     {
         self.debugLog("Event doesn't match types for sensor: "+sensor.name);
         return;
@@ -174,6 +181,10 @@ Plex.prototype.processEvent = function(self, event, sensor) {
     
     if (event.event == "media.play" || (event.event == "media.resume" && !sensor.ignorePauseResume))
     {
+        if (sensor.activePlayers.size == 0)
+        {
+            self.debugLog("Event triggered sensor on: "+sensor.name);
+        }
         sensor.activePlayers.add(event.Player.uuid);
         sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(true);
     }
@@ -183,6 +194,7 @@ Plex.prototype.processEvent = function(self, event, sensor) {
         if (sensor.activePlayers.size == 0)
         {
             sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+            self.debugLog("Event triggered sensor off: "+sensor.name);
         }
     }
     else

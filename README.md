@@ -40,7 +40,7 @@ Variable | Description
 -------- | -----------
 `name` | This will be the name of this sensor, it must be included and unique.
 `types` | (Optional) This is an array of types for which playback can trigger the sensor. (Valid types include `movie`, `episode`, `track`, `photo`)
-`players` | (Optional) This is an array of player names for players that will trigger the sensor. (To find out your player name you can check the [Now Playing section of Plex Web](https://app.plex.tv/desktop#!/status/playing) while that player is playing)
+`players` | (Optional) This is an array of player names or UUIDs for players that will trigger the sensor. (To find out your player name you can check the [Now Playing section of Plex Web](https://app.plex.tv/desktop#!/status/playing) while that player is playing, or enable the `logSeenPlayersAndUsers` setting described below which will also log UUID values as an alternative to names)
 `users` | (Optional) This is an array of user names for users that will trigger the sensor. (To find out your user name you can check the [Now Playing section of Plex Web](https://app.plex.tv/desktop#!/status/playing) while that user is playing)
 `ignorePauseResume` | (Optional - default: false) If set to true the sensor will remain "triggered" while playback is paused. By default paused players will untrigger the sensor.
 `customFilters` | (Optional / Advanced) Custom filters allow you to filter for specific properties on the JSON events that the above use cases don't cover. For example you could make a sensor only triggered by playing a specific TV Show or movie. See [Plex's article on Webhooks](https://support.plex.tv/articles/115002267687-webhooks/) for more details of what is passed in webhook events.
