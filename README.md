@@ -51,23 +51,23 @@ Additionally, you can set the following settings globally, outside of the `senso
 Variable | Description
 -------- | -----------
 `logSeenPlayersAndUsers` | (Optional - default: false) Setting this to true will log every player device name and username that the plugin sees starting a playback from the webhook, potentially useful for figuring out device names.
-`debug` | (Optional - default: false) Setting this to true will log every webhook and how it is handled by the plugin's logic. You should probably leave this false.
+`debug` | (Optional - default: false) Setting this to true will log every webhook and how it is handled by the plugin's logic. You should probably leave this false, but you might find it useful for looking at the entire contents of a webhook payload.
 
 
 ### Example Configs
 
-Example config with one sensor triggered by any Plex playback:
+Example config with one sensor triggered by any Plex playback by your account or from your server:
 ```json
 {
 "platforms": [
-    {
-      "platform": "homebridge-plex-sensors.Plex",
-      "sensors": [
-        {
-          "name": "Plex Playing",
-        }
-      ]
-    }
+  {
+    "platform": "homebridge-plex-sensors.Plex",
+    "sensors": [
+      {
+        "name": "Plex Playing",
+      }
+    ]
+  }
 ]
 }
 ```
@@ -76,23 +76,23 @@ Example config with a sensor triggered by TV show playbacks, and a sensor trigge
 ```json
 {
 "platforms": [
-    {
-      "platform": "homebridge-plex-sensors.Plex",
-      "sensors": [
-        {
-          "name": "Movie Playing",
-          "types": ["movie"],
-          "players": ["Living Room"],
-          "users": ["MyUserName"]
-        },
-        {
-          "name": "TV Playing",
-          "types": ["episode"],
-          "players": ["Living Room"],
-          "users": ["MyUserName"]
-        }
-      ]
-    }
+  {
+    "platform": "homebridge-plex-sensors.Plex",
+    "sensors": [
+      {
+        "name": "Movie Playing",
+        "types": ["movie"],
+        "players": ["Living Room"],
+        "users": ["MyUserName"]
+      },
+      {
+        "name": "TV Playing",
+        "types": ["episode"],
+        "players": ["Living Room"],
+        "users": ["MyUserName"]
+      }
+    ]
+  }
 ]
 }
 ```
@@ -101,20 +101,20 @@ Example config with a sensor triggered only by playing the TV show Breaking Bad 
 ```json
 {
 "platforms": [
-    {
-      "platform": "homebridge-plex-sensors.Plex",
-      "port": "22988",
-      "sensors": [
+  {
+    "platform": "homebridge-plex-sensors.Plex",
+    "port": "22988",
+    "sensors": [
+      {
+        "name": "Breaking Bad is on",
+        "types": ["episode"],
+        "customFilters":
         {
-          "name": "Breaking Bad is on",
-          "types": ["episode"],
-          "customFilters":
-          {
-              "Metadata.grandparentTitle": "Breaking Bad"
-          }
+          "Metadata.grandparentTitle": "Breaking Bad"
         }
-      ]
-    }
+      }
+    ]
+  }
 ]
 }
 ```
@@ -123,16 +123,16 @@ Example config with a horror movie specific sensor:
 ```json
 {
 "platforms": [
-    {
-      "platform": "homebridge-plex-sensors.Plex",
-      "sensors": [
-        {
-          "name": "Horror Movie",
-          "types": ["movie"],
-          "genres": ["Horror"]
-        }
-      ]
-    }
+  {
+    "platform": "homebridge-plex-sensors.Plex",
+    "sensors": [
+      {
+        "name": "Horror Movie",
+        "types": ["movie"],
+        "genres": ["Horror"]
+      }
+    ]
+  }
 ]
 }
 ```
@@ -141,15 +141,15 @@ Example config with the `logSeenPlayersAndUsers` setting to `true` for helping y
 ```json
 {
 "platforms": [
-    {
-      "platform": "homebridge-plex-sensors.Plex",
-      "logSeenPlayersAndUsers": true,
-      "sensors": [
-        {
-          "name": "Plex Playing",
-        }
-      ]
-    }
+  {
+    "platform": "homebridge-plex-sensors.Plex",
+    "logSeenPlayersAndUsers": true,
+    "sensors": [
+      {
+        "name": "Plex Playing",
+      }
+    ]
+  }
 ]
 }
 ```
