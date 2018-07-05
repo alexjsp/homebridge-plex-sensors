@@ -1,0 +1,57 @@
+{
+    "bridge": {
+        "name": "Homebridge",
+        "username": "CC:22:3D:E3:CE:30",
+        "port": 51826,
+        "pin": "031-45-154"
+    },
+    
+    "description": "This is an example configuration file with a boatload of different sensor examples.",
+
+    "platforms": [
+        {
+            "platform": "homebridge-plex-sensors.Plex",
+            "sensors": [
+                {
+                  "name": "Plex Playing"
+                },
+                {
+                  "name": "Movie Playing",
+                  "types": ["movie"],
+                  "players": ["Living Room"],
+                  "users": ["MyUserName"]
+                },
+                {
+                  "name": "TV Playing",
+                  "types": ["episode"],
+                  "players": ["Living Room"],
+                  "users": ["MyUserName"]
+                },
+                {
+                    "name": "Horror Movie",
+                    "types": ["movie"],
+                    "genres": ["Horror", "Thriller"]
+                },
+                {
+                    "name": "Music",
+                    "types": ["track"],
+                    "players": ["Bedroom"],
+                    "ignorePauseResume": true
+                },
+                {
+                  "name": "Breaking Bad is on",
+                  "types": ["episode"],
+                  "customFilters":
+                  {
+                      "Metadata.grandparentTitle": "Breaking Bad"
+                  }
+                }
+            ],
+            "debug": true,
+            "logSeenPlayersAndUsers": true
+        }
+    ],
+
+    "accessories": [
+    ]
+}
