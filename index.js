@@ -57,14 +57,22 @@ function Plex(log, config, api) {
                 {
                     self.log("Adding '"+sensor.name+"' sensor.");
                     var accessory = new Accessory(sensor.name, uuid);
+                                        
                     var service = accessory.addService(Service.OccupancySensor, sensor.name);
-
+                    
                     self.accessories[uuid] = accessory;
                     sensor.service = service;
+                    sensor.accessory = accessory;
                     self.api.registerPlatformAccessories(pluginName, platformName, [accessory]);
                 }
             }
             sensor.activePlayers = new Set();
+            
+            var informationService = accessory.getService(Service.AccessoryInformation);
+            informationService
+              .setCharacteristic(Characteristic.Manufacturer, "Homebridge Sensors for Plex")
+              .setCharacteristic(Characteristic.Model, "Plex Sensor")
+              .setCharacteristic(Characteristic.SerialNumber, sensor.name);
         }
         
         var deleteAccessories = new Array();
@@ -98,6 +106,7 @@ Plex.prototype.configureAccessory = function(accessory) {
     {
         if (accessory.services[1].displayName == sensor.name)
         {
+            sensor.accessory = accessory;
             sensor.service = accessory.services[1];
             sensor.activePlayers = new Set();
         }
