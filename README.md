@@ -64,7 +64,7 @@ Example config with one sensor triggered by any Plex playback by your account or
     "platform": "homebridge-plex-sensors.Plex",
     "sensors": [
       {
-        "name": "Plex Playing",
+        "name": "Plex Playing"
       }
     ]
   }
@@ -97,6 +97,24 @@ Example config with a sensor triggered by TV show playbacks, and a sensor trigge
 }
 ```
 
+Example config with a horror movie genre-specific sensor:
+```json
+{
+"platforms": [
+  {
+    "platform": "homebridge-plex-sensors.Plex",
+    "sensors": [
+      {
+        "name": "Horror Movie",
+        "types": ["movie"],
+        "genres": ["Horror"]
+      }
+    ]
+  }
+]
+}
+```
+
 Example config with a sensor triggered only by playing the TV show Breaking Bad (also shows a custom port number being set for the webhook server):
 ```json
 {
@@ -112,24 +130,6 @@ Example config with a sensor triggered only by playing the TV show Breaking Bad 
         {
           "Metadata.grandparentTitle": "Breaking Bad"
         }
-      }
-    ]
-  }
-]
-}
-```
-
-Example config with a horror movie specific sensor:
-```json
-{
-"platforms": [
-  {
-    "platform": "homebridge-plex-sensors.Plex",
-    "sensors": [
-      {
-        "name": "Horror Movie",
-        "types": ["movie"],
-        "genres": ["Horror"]
       }
     ]
   }
