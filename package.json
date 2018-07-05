@@ -1,6 +1,6 @@
 {
   "name": "homebridge-plex-sensors",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A plugin for homebridge that adds sensors for Plex playbacks",
   "license": "MIT",
   "keywords": [
