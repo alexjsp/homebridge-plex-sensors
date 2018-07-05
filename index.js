@@ -68,7 +68,7 @@ function Plex(log, config, api) {
             }
             sensor.activePlayers = new Set();
             
-            var informationService = accessory.getService(Service.AccessoryInformation);
+            var informationService = sensor.accessory.getService(Service.AccessoryInformation);
             informationService
               .setCharacteristic(Characteristic.Manufacturer, "Homebridge Sensors for Plex")
               .setCharacteristic(Characteristic.Model, "Plex Sensor")
