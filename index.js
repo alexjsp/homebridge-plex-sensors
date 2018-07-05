@@ -194,12 +194,17 @@ Plex.prototype.processEvent = function(self, event, sensor) {
         return;
     }
     if (sensor.genres
-        && sensor.genres.length > 0
-        && event.Metadata.Genre
-        && event.Metadata.Genre.length > 0)
+        && sensor.genres.length > 0)
     {
         var matches = false;
         self.debugLog("Testing genres for sensor: "+sensor.name);
+        if (!event.Metadata.Genre
+            || event.Metadata.Genre.length == 0)
+        {
+            self.debugLog("Event doesn't match genres for sensor: "+sensor.name);
+            return;
+        }
+        
         for (var genre of event.Metadata.Genre)
         {
             if (sensor.genres.indexOf(genre.tag.toLowerCase()) > -1)
@@ -208,6 +213,7 @@ Plex.prototype.processEvent = function(self, event, sensor) {
                 matches = true;
             }
         }
+        
         if (!matches)
         {
             self.debugLog("Event doesn't match genres for sensor: "+sensor.name);
