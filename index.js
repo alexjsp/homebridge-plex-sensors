@@ -68,6 +68,14 @@ function Plex(log, config, api) {
             }
             sensor.activePlayers = new Set();
             
+            if (sensor.genres)
+            {
+                for (var i = 0; i < sensor.genres.length; i++)
+                {
+                    sensor.genres[i] = sensor.genres[i].toLowerCase();
+                }
+            }
+            
             var informationService = sensor.accessory.getService(Service.AccessoryInformation);
             informationService
               .setCharacteristic(Characteristic.Manufacturer, "Homebridge Sensors for Plex")
@@ -184,6 +192,27 @@ Plex.prototype.processEvent = function(self, event, sensor) {
     {
         self.debugLog("Event doesn't match types for sensor: "+sensor.name);
         return;
+    }
+    if (sensor.genres
+        && sensor.genres.length > 0
+        && event.Metadata.Genre
+        && event.Metadata.Genre.length > 0)
+    {
+        var matches = false;
+        self.debugLog("Testing genres for sensor: "+sensor.name);
+        for (var genre of event.Metadata.Genre)
+        {
+            if (sensor.genres.indexOf(genre.tag.toLowerCase()) > -1)
+            {
+                self.debugLog("Matched genre: "+genre.tag);
+                matches = true;
+            }
+        }
+        if (!matches)
+        {
+            self.debugLog("Event doesn't match genres for sensor: "+sensor.name);
+            return;
+        }
     }
     if (sensor.customFilters)
     {
