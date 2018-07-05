@@ -113,10 +113,22 @@ Plex.prototype.debugLog = function(string)
 }
 
 Plex.prototype.httpHandler = function(self, body) {
-    self.debugLog("Plex incoming webhook");
     var jsonStart = body.indexOf("{");
     var json = body.substring(jsonStart, body.indexOf("\n", jsonStart));
-    var event = JSON.parse(json);
+	var event;
+	try {
+    	event = JSON.parse(json);
+	}
+	catch(e) {
+		self.debugLog("Webhook URL called without JSON body.");
+	}
+	
+	if (!event)
+	{
+		return;
+	}
+	
+	self.debugLog("Plex incoming webhook");
 
     // Ignore non playback events
     if (event.event != "media.play"
