@@ -29,6 +29,8 @@ function Plex(log, config, api) {
     this.sensors = config["sensors"];
     this.port = config["port"] || '22987';
     this.logSeenPlayersAndUsers = config["logSeenPlayersAndUsers"] || false;
+    this.delayOff = config["delayOff"] || 0;
+    this.timer;
     debug = config["debug"] || false;
     var self = this;
         
@@ -132,20 +134,20 @@ Plex.prototype.debugLog = function(string)
 Plex.prototype.httpHandler = function(self, body) {
     var jsonStart = body.indexOf("{");
     var json = body.substring(jsonStart, body.indexOf("\n", jsonStart));
-	var event;
-	try {
-    	event = JSON.parse(json);
-	}
-	catch(e) {
-		self.debugLog("Webhook URL called without JSON body.");
-	}
-	
-	if (!event)
-	{
-		return;
-	}
-	
-	self.debugLog("Plex incoming webhook");
+    var event;
+    try {
+        event = JSON.parse(json);
+    }
+    catch(e) {
+        self.debugLog("Webhook URL called without JSON body.");
+    }
+    
+    if (!event)
+    {
+        return;
+    }
+    
+    self.debugLog("Plex incoming webhook");
 
     // Ignore non playback events
     if (event.event != "media.play"
@@ -237,6 +239,7 @@ Plex.prototype.processEvent = function(self, event, sensor) {
     
     if (event.event == "media.play" || (event.event == "media.resume" && !sensor.ignorePauseResume))
     {
+        clearTimeout(this.timeout)
         if (sensor.activePlayers.size == 0)
         {
             self.debugLog("Event triggered sensor on: "+sensor.name);
@@ -249,8 +252,11 @@ Plex.prototype.processEvent = function(self, event, sensor) {
         sensor.activePlayers.delete(event.Player.uuid);
         if (sensor.activePlayers.size == 0)
         {
-            sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
-            self.debugLog("Event triggered sensor off: "+sensor.name);
+            self.debugLog("Event scheduled sensor off: "+sensor.name+" after "+this.delayOff+"ms");
+            this.timeout = setTimeout(function() {
+                self.debugLog("Event triggered sensor off: "+sensor.name);
+                sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+            }.bind(this), this.delayOff);
         }
     }
     else

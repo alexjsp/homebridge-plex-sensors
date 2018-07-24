@@ -48,7 +48,8 @@
                 }
             ],
             "debug": true,
-            "logSeenPlayersAndUsers": true
+            "logSeenPlayersAndUsers": true,
+            "delayOff": 3000000
         }
     ],
 

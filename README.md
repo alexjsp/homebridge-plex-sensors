@@ -51,6 +51,7 @@ Additionally, you can set the following settings globally, outside of the `senso
 Variable | Description
 -------- | -----------
 `logSeenPlayersAndUsers` | (Optional - default: false) Setting this to true will log every player device name and username that the plugin sees starting a playback from the webhook, potentially useful for figuring out device names.
+`delayOff` | (Optional - default: 0) Setting this to a value above 0 will delay the occupancy sensor being untriggered when playback is stopped. This timeout is measured in milliseconds.
 `debug` | (Optional - default: false) Setting this to true will log every webhook and how it is handled by the plugin's logic. You should probably leave this false, but you might find it useful for looking at the entire contents of a webhook payload.
 
 
