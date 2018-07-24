@@ -30,7 +30,7 @@ function Plex(log, config, api) {
     this.port = config["port"] || '22987';
     this.logSeenPlayersAndUsers = config["logSeenPlayersAndUsers"] || false;
     this.delayOff = config["delayOff"] || 0;
-    this.timer;
+    this.timeout;
     debug = config["debug"] || false;
     var self = this;
         
