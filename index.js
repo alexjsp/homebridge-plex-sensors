@@ -252,11 +252,19 @@ Plex.prototype.processEvent = function(self, event, sensor) {
         sensor.activePlayers.delete(event.Player.uuid);
         if (sensor.activePlayers.size == 0)
         {
-            self.debugLog("Event scheduled sensor off: "+sensor.name+" after "+this.delayOff+"ms");
-            this.timeout = setTimeout(function() {
-                self.debugLog("Event triggered sensor off: "+sensor.name);
+            if (this.delayOff > 0)
+            {
+                self.debugLog("Event scheduled sensor off: "+sensor.name+" after "+this.delayOff+"ms");
+                this.timeout = setTimeout(function() {
+                    self.debugLog("Event triggered sensor off: "+sensor.name);
+                    sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+                }.bind(this), this.delayOff);
+            }
+            else
+            {
+                self.debugLog("Event triggered sensor off without delay: "+sensor.name);
                 sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
-            }.bind(this), this.delayOff);
+            }
         }
     }
     else
