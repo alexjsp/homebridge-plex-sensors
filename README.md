@@ -45,13 +45,14 @@ Variable | Description
 `genres` | (Optional) This is an array of genre strings. If set, movie playbacks will only trigger the sensor if the movie's genre matches one or more of the genres in this array.
 `ignorePauseResume` | (Optional - default: false) If set to true the sensor will remain "triggered" while playback is paused. By default paused players will untrigger the sensor.
 `customFilters` | (Optional / Advanced) Custom filters allow you to filter for specific properties on the JSON events that the above use cases don't cover. For example you could make a sensor only triggered by playing a specific TV Show or movie. See [Plex's article on Webhooks](https://support.plex.tv/articles/115002267687-webhooks/) for more details of what is passed in webhook events.
+`delayOff` | (Optional - default: 0) Setting this to a value above 0 will delay the occupancy sensor being untriggered when playback is stopped. This timeout is measured in milliseconds.
 
 Additionally, you can set the following settings globally, outside of the `sensors` object:
 
 Variable | Description
 -------- | -----------
 `logSeenPlayersAndUsers` | (Optional - default: false) Setting this to true will log every player device name and username that the plugin sees starting a playback from the webhook, potentially useful for figuring out device names.
-`delayOff` | (Optional - default: 0) Setting this to a value above 0 will delay the occupancy sensor being untriggered when playback is stopped. This timeout is measured in milliseconds.
+
 `debug` | (Optional - default: false) Setting this to true will log every webhook and how it is handled by the plugin's logic. You should probably leave this false, but you might find it useful for looking at the entire contents of a webhook payload.
 
 

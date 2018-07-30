@@ -29,8 +29,7 @@ function Plex(log, config, api) {
     this.sensors = config["sensors"];
     this.port = config["port"] || '22987';
     this.logSeenPlayersAndUsers = config["logSeenPlayersAndUsers"] || false;
-    this.delayOff = config["delayOff"] || 0;
-    this.timeout;
+    this.timeouts = {};
     debug = config["debug"] || false;
     var self = this;
         
@@ -239,7 +238,11 @@ Plex.prototype.processEvent = function(self, event, sensor) {
     
     if (event.event == "media.play" || (event.event == "media.resume" && !sensor.ignorePauseResume))
     {
-        clearTimeout(this.timeout)
+        if (typeof this.timeouts[sensor.name] != 'undefined')
+        {
+            self.debugLog("Clear existing delayed off for: "+sensor.name);
+            clearTimeout(this.timeouts[sensor.name])
+        }
         if (sensor.activePlayers.size == 0)
         {
             self.debugLog("Event triggered sensor on: "+sensor.name);
@@ -251,14 +254,20 @@ Plex.prototype.processEvent = function(self, event, sensor) {
     {
         sensor.activePlayers.delete(event.Player.uuid);
         if (sensor.activePlayers.size == 0)
-        {
-            if (this.delayOff > 0)
+        {   
+            if (typeof this.timeouts[sensor.name] != 'undefined')
             {
-                self.debugLog("Event scheduled sensor off: "+sensor.name+" after "+this.delayOff+"ms");
-                this.timeout = setTimeout(function() {
+                self.debugLog("Clear existing delayed off for: "+sensor.name);
+                clearTimeout(this.timeouts[sensor.name])
+            }
+            if (sensor.delayOff &&
+                sensor.delayOff > 0)
+            {
+                self.debugLog("Event scheduled sensor off: "+sensor.name+" after "+sensor.delayOff+"ms");
+                this.timeouts[sensor.name] = setTimeout(function() {
                     self.debugLog("Event triggered sensor off: "+sensor.name);
                     sensor.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
-                }.bind(this), this.delayOff);
+                }.bind(this), sensor.delayOff);
             }
             else
             {
