@@ -19,13 +19,14 @@
                   "name": "Movie Playing",
                   "types": ["movie"],
                   "players": ["Living Room"],
-                  "users": ["MyUserName"]
+                  "users": ["MyUserName"],
+                  "delayOff": 1000000
                 },
                 {
                   "name": "TV Playing",
                   "types": ["episode"],
                   "players": ["Living Room"],
-                  "users": ["MyUserName"]
+                  "delayOff": 3000000
                 },
                 {
                     "name": "Horror Movie",
